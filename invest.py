@@ -1,4 +1,3 @@
-import fund
 import matplotlib.pyplot as plt
 
 
@@ -99,17 +98,17 @@ class BuyFixedValue(Invest):
         self.update_data(payment, income, buy_unit, sell_unit, now_price)
 
 
-if __name__ == '__main__':
-    a = BuyFixedUnit(5.0)
-    b = BuyFixedPrice(750.0)
-    c = BuyFixedValue(750.0)
+def invest_simulation(unit, price, value, fund_generator, month):
+    a = BuyFixedUnit(unit)
+    b = BuyFixedPrice(price)
+    c = BuyFixedValue(value)
     price_list = []
-    for i, p in enumerate(fund.cabbage()):
+    for i, p in enumerate(fund_generator, start=1):
         a.buy(p)
         b.buy(p)
         c.buy(p)
         price_list.append(p)
-        if i >= 59:
+        if i >= month:
             break
     fig, (axL, axR) = plt.subplots(ncols=2)
     axL.plot(price_list, label="price")
@@ -122,4 +121,3 @@ if __name__ == '__main__':
     axR.set_title("total_assets")
     axL.set_xlabel("months")
     axR.set_xlabel("months")
-    plt.show()
